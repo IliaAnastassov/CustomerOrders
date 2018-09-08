@@ -13,10 +13,10 @@ namespace CustomerOrders.Data
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class NorthwindEntities : DbContext
+    public partial class CustomerOrdersContext : DbContext
     {
-        public NorthwindEntities()
-            : base("name=NorthwindEntities")
+        public CustomerOrdersContext()
+            : base("name=CustomerOrdersContext")
         {
         }
     

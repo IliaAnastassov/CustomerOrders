@@ -77,6 +77,8 @@
     <Compile Include="Product.cs">
       <DependentUpon>CustomerOrdersModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\DisconnectedRepository.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
