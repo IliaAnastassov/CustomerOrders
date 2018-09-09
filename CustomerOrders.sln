@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerOrders.WebAPI.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerOrders.Data", "CustomerOrders.Data\CustomerOrders.Data.csproj", "{EC87D0AA-B45D-47B9-8EF7-CF36C8C6F392}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPI", "WebAPI", "{AFAF0712-6338-48C0-BF16-F85BD2C73084}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9B2247B9-9D0B-4F54-9D10-72AFF8A802CD} = {AFAF0712-6338-48C0-BF16-F85BD2C73084}
+		{C7FF785A-E01A-46A3-9F46-541CBE3E3E3A} = {AFAF0712-6338-48C0-BF16-F85BD2C73084}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA38D374-7CE1-4BAD-9F0A-F5240183E2C9}
