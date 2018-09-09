@@ -14,10 +14,10 @@ namespace CustomerOrders.WebAPI
         {
             // Web API configuration and services
             var container = new UnityContainer();
-            container.RegisterType<IRepository, DisconnectedRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IRepository, Repository>(new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
 
-            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
             config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
             config.Formatters.Remove(config.Formatters.XmlFormatter);
 
