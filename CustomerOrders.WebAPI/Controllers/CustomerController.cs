@@ -36,7 +36,7 @@ namespace CustomerOrders.WebAPI.Controllers
             return customerDto;
         }
 
-        [Route("customer/{customerId}/orders")]
+        [Route("api/customer/{customerId}/orders")]
         public IEnumerable<OrderDTO> GetOrdersByCustomerId(string customerId)
         {
             var orders = _repository.GetOrdersByCustomerId(customerId);
