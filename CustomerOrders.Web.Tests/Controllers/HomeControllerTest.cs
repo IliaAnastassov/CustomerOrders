@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CustomerOrders.Web;
 using CustomerOrders.Web.Controllers;
+using System.Threading.Tasks;
 
 namespace CustomerOrders.Web.Tests.Controllers
 {
@@ -19,7 +20,7 @@ namespace CustomerOrders.Web.Tests.Controllers
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            Task<ActionResult> result = controller.Index() as Task<ActionResult>;
 
             // Assert
             Assert.IsNotNull(result);
