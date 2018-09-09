@@ -1,27 +1,51 @@
-﻿using CustomerOrders.Web.Models;
+﻿using CustomerOrders.Web.Constants;
+using CustomerOrders.Web.Models;
+using CustomerOrders.Web.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Web;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace CustomerOrders.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
-        {
-            var customers = new List<Customer>
-            {
-                new Customer { Id = 1, Name = "Shmuley Boteach", NumberOfOrders = 6 },
-                new Customer { Id = 2, Name = "Dildo Schwaggins", NumberOfOrders = 2 },
-                new Customer { Id = 3, Name = "Skank Hunt", NumberOfOrders = 4 },
-                new Customer { Id = 4, Name = "Palma Hayek", NumberOfOrders = 12 },
-                new Customer { Id = 5, Name = "John Doe", NumberOfOrders = 31 },
-                new Customer { Id = 6, Name = "Nignog Johnson", NumberOfOrders = 7 }
-            };
+        private string _apiUrl = $"{ConfigurationManager.AppSettings["ApiUrl"]}{ApiEndpoints.Customers}";
+        private HttpClient _client;
 
-            return View(customers);
+        public HomeController()
+        {
+            _client = new HttpClient();
+            _client.BaseAddress = new Uri(_apiUrl);
+            _client.DefaultRequestHeaders.Clear();
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        public async Task<ActionResult> Index()
+        {
+            var customers = new List<Customer>();
+            var model = new List<HomeIndexViewModel>();
+            var responseMessage = await _client.GetAsync(_apiUrl);
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var responseData = responseMessage.Content.ReadAsStringAsync().Result;
+                customers = JsonConvert.DeserializeObject<List<Customer>>(responseData);
+                model = customers.Select(
+                    c => new HomeIndexViewModel
+                    {
+                        Id = c.CustomerID,
+                        Name = c.ContactName,
+                        NumberOfOrders = c.Orders.Count
+                    }).ToList();
+            }
+
+            return View(model);
         }
 
         public ActionResult About()
