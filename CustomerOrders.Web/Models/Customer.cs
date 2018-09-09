@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 
 namespace CustomerOrders.Web.Models
 {
     public class Customer
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        [Display(Name = "Number of Orders")]
-        public int NumberOfOrders { get; set; }
+        public string CustomerID { get; set; }
+        public string ContactName { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }
