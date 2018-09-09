@@ -1,6 +1,7 @@
-﻿using CustomerOrders.Data;
-using CustomerOrders.Data.Interfaces;
+﻿using CustomerOrders.Data.Interfaces;
+using CustomerOrders.WebAPI.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 
 namespace CustomerOrders.WebAPI.Controllers
@@ -14,16 +15,40 @@ namespace CustomerOrders.WebAPI.Controllers
             _repository = repository;
         }
 
-        public Customer GetCustomer(string id)
+        public CustomerDTO GetCustomer(string id)
         {
             var customer = _repository.GetCustomer(id);
-            return customer;
+
+            var orderDtos = customer.Orders.Select(
+                o => new OrderDTO
+                {
+                    OrderID = o.OrderID,
+                    CustomerID = o.CustomerID
+                }).ToList();
+
+            var customerDto = new CustomerDTO
+            {
+                CustomerID = customer.CustomerID,
+                ContactName = customer.ContactName,
+                Orders = orderDtos
+            };
+
+            return customerDto;
         }
 
         [Route("customer/{customerId}/orders")]
-        public IEnumerable<Order> GetOrdersByCustomerId(string customerId)
+        public IEnumerable<OrderDTO> GetOrdersByCustomerId(string customerId)
         {
-            return _repository.GetOrdersByCustomerId(customerId);
+            var orders = _repository.GetOrdersByCustomerId(customerId);
+
+            var orderDtos = orders.Select(
+                o => new OrderDTO
+                {
+                    OrderID = o.OrderID,
+                    CustomerID = o.CustomerID
+                }).ToList();
+
+            return orderDtos;
         }
     }
 }
