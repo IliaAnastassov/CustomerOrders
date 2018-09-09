@@ -1,7 +1,7 @@
 ﻿using CustomerOrders.Data.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
+using System.Linq;
 
 namespace CustomerOrders.Data.Repositories
 {
@@ -22,7 +22,8 @@ namespace CustomerOrders.Data.Repositories
         {
             using (var context = new CustomerOrdersContext())
             {
-                return context.Customers.Find(id);
+                var customer = context.Customers.Find(id);
+                return customer;
             }
         }
 
@@ -31,6 +32,7 @@ namespace CustomerOrders.Data.Repositories
             using (var context = new CustomerOrdersContext())
             {
                 return context.Orders.AsNoTracking()
+                                     .Include(o => o.Order_Details)
                                      .Where(o => o.CustomerID == id)
                                      .ToList();
             }

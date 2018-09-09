@@ -1,28 +1,29 @@
 ﻿using CustomerOrders.Data;
 using CustomerOrders.Data.Interfaces;
-using CustomerOrders.Data.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace CustomerOrders.WebAPI.Controllers
 {
     public class CustomerController : ApiController
     {
-        private readonly IRepository _repo = new DisconnectedRepository();
+        private readonly IRepository _repository;
+
+        public CustomerController(IRepository repository)
+        {
+            _repository = repository;
+        }
 
         public Customer GetCustomer(string id)
         {
-            return _repo.GetCustomer(id);
+            var customer = _repository.GetCustomer(id);
+            return customer;
         }
 
         [Route("customer/{customerId}/orders")]
         public IEnumerable<Order> GetOrdersByCustomerId(string customerId)
         {
-            return _repo.GetOrdersByCustomerId(customerId);
+            return _repository.GetOrdersByCustomerId(customerId);
         }
     }
 }

@@ -1,7 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using CustomerOrders.Data.Interfaces;
+using CustomerOrders.Data.Repositories;
+using CustomerOrders.WebAPI.Resolver;
+using Newtonsoft.Json;
 using System.Web.Http;
+using Unity;
+using Unity.Lifetime;
 
 namespace CustomerOrders.WebAPI
 {
@@ -10,6 +13,13 @@ namespace CustomerOrders.WebAPI
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            var container = new UnityContainer();
+            container.RegisterType<IRepository, DisconnectedRepository>(new HierarchicalLifetimeManager());
+            config.DependencyResolver = new UnityResolver(container);
+
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
 
             // Web API routes
             config.MapHttpAttributeRoutes();
