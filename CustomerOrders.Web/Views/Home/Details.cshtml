@@ -1,0 +1,17 @@
+﻿@using CustomerOrders.Web.ViewModels
+
+@model CustomerOrders.Web.ViewModels.HomeDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="page-header">
+    <h2>Details</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-10">
+        @Html.DisplayFor(m => Model.Message)
+    </div>
+</div>
