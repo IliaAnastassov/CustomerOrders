@@ -17,24 +17,35 @@ namespace CustomerOrders.WebAPI.Controllers
         }
 
         [Route("~/api/customers")]
-        public IEnumerable<CustomerDto> GetAll()
+        public IHttpActionResult GetAll()
         {
             var customers = _repository.GetAllCustomers();
-            return Mapper.Map<List<CustomerDto>>(customers);
+            var customerDtos = Mapper.Map<List<CustomerDto>>(customers);
+
+            return Ok(customerDtos);
         }
 
         [Route("{id:alpha}")]
-        public CustomerDto Get(string id)
+        public IHttpActionResult Get(string id)
         {
             var customer = _repository.GetCustomer(id);
-            return Mapper.Map<CustomerDto>(customer);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            var customerDto = Mapper.Map<CustomerDto>(customer);
+
+            return Ok(customerDto);
         }
 
         [Route("{customerId}/orders")]
-        public IEnumerable<OrderDto> GetOrdersByCustomerId(string customerId)
+        public IHttpActionResult GetOrdersByCustomerId(string customerId)
         {
             var orders = _repository.GetOrdersByCustomerId(customerId);
-            return Mapper.Map<List<OrderDto>>(orders);
+            var orderDtos = Mapper.Map<List<OrderDto>>(orders);
+
+            return Ok(orderDtos);
         }
     }
 }
