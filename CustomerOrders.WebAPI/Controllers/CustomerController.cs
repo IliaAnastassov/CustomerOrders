@@ -2,7 +2,6 @@
 using CustomerOrders.Data.Interfaces;
 using CustomerOrders.WebAPI.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
 
 namespace CustomerOrders.WebAPI.Controllers

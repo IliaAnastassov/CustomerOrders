@@ -24,13 +24,17 @@
         </section>
 
         <div>
-            <h4>Orders</h4>
+            <h3>Orders</h3>
         </div>
 
         @foreach (var order in Model.Orders)
         {
-            <section>
-                <div>ID: @order.OrderID</div>
+            <section class="panel panel-default">
+                <h5 class="panel-heading">ID: @order.OrderID</h5>
+                <div class="panel-body">
+                    <div>Total: @string.Format("{0:C2}", order.Total)</div>
+                    <div>Number of products: @order.ProductCount</div>
+                </div>
             </section>
         }
     </div>

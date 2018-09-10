@@ -1,10 +1,9 @@
 ﻿using CustomerOrders.Web.Constants;
 using CustomerOrders.Web.Models;
 using CustomerOrders.Web.ViewModels;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -39,11 +38,29 @@ namespace CustomerOrders.Web.Controllers
             var ordersRequestUri = GetRequestUri(string.Format(ApiEndpoints.CustomerOrders, id));
             var orders = await GetOrders(ordersRequestUri);
 
+            foreach (var order in orders)
+            {
+                order.Total = GetTotalForOrder(order);
+                order.ProductCount = order.OrderDetails.Sum(o => o.Quantity);
+            }
+
             var model = new HomeDetailsViewModel();
             model.Customer = customer;
             model.Orders = orders;
 
             return View(model);
+        }
+
+        private decimal GetTotalForOrder(Order order)
+        {
+            decimal total = 0;
+            foreach (var orderDetail in order.OrderDetails)
+            {
+                var beforeDiscount = orderDetail.Quantity * orderDetail.UnitPrice;
+                total += beforeDiscount - (decimal)orderDetail.Discount * beforeDiscount;
+            }
+
+            return total;
         }
 
         private async Task<List<Customer>> GetCustomers(string requestUri)
