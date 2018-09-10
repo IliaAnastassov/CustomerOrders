@@ -12,7 +12,6 @@ namespace CustomerOrders.Data.Repositories
         public IEnumerable<Customer> GetAllCustomers()
         {
             return _context.Customers.AsNoTracking()
-                                    .Include(c => c.Orders)
                                     .OrderBy(c => c.ContactName)
                                     .ToList();
         }

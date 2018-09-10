@@ -9,5 +9,7 @@ namespace CustomerOrders.WebAPI.Models
     {
         public int OrderID { get; set; }
         public string CustomerID { get; set; }
+
+        public ICollection<OrderDetailDto> OrderDetails { get; set; }
     }
 }

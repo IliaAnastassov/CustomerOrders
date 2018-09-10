@@ -1,5 +1,6 @@
 ﻿using CustomerOrders.Data.Interfaces;
 using CustomerOrders.Data.Repositories;
+using CustomerOrders.WebAPI.Configuration;
 using CustomerOrders.WebAPI.Resolver;
 using Newtonsoft.Json;
 using System.Web.Http;
@@ -16,6 +17,8 @@ namespace CustomerOrders.WebAPI
             var container = new UnityContainer();
             container.RegisterType<IRepository, Repository>(new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
+
+            AutoMapperConfiguration.Configure();
 
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
             config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
