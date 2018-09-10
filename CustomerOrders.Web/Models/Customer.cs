@@ -6,6 +6,7 @@ namespace CustomerOrders.Web.Models
     public class Customer
     {
         public string CustomerID { get; set; }
+        [Display(Name = "Customer Name")]
         public string ContactName { get; set; }
         public string CompanyName { get; set; }
         public string ContactTitle { get; set; }

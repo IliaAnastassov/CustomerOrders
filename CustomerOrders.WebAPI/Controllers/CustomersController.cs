@@ -15,17 +15,17 @@ namespace CustomerOrders.WebAPI.Controllers
             _repository = repository;
         }
 
-        public IEnumerable<CustomerDTO> GetCustomers()
+        public IEnumerable<CustomerDto> GetCustomers()
         {
             var customers = _repository.GetAllCustomers();
 
             var customerDtos = customers.Select(
-                c => new CustomerDTO
+                c => new CustomerDto
                 {
                     CustomerID = c.CustomerID,
                     ContactName = c.ContactName,
                     Orders = c.Orders.Select(
-                        o => new OrderDTO
+                        o => new OrderDto
                         {
                             OrderID = o.OrderID,
                             CustomerID = o.CustomerID

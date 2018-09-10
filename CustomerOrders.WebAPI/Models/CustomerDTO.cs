@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CustomerOrders.WebAPI.Models
 {
-    public class CustomerDTO
+    public class CustomerDto
     {
         public string CustomerID { get; set; }
         public string ContactName { get; set; }
@@ -19,6 +19,6 @@ namespace CustomerOrders.WebAPI.Models
         public string Phone { get; set; }
         public string Fax { get; set; }
 
-        public ICollection<OrderDTO> Orders { get; set; }
+        public ICollection<OrderDto> Orders { get; set; }
     }
 }

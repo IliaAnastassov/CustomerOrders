@@ -15,18 +15,18 @@ namespace CustomerOrders.WebAPI.Controllers
             _repository = repository;
         }
 
-        public CustomerDTO GetCustomer(string id)
+        public CustomerDto GetCustomer(string id)
         {
             var customer = _repository.GetCustomer(id);
 
             var orderDtos = customer.Orders.Select(
-                o => new OrderDTO
+                o => new OrderDto
                 {
                     OrderID = o.OrderID,
                     CustomerID = o.CustomerID
                 }).ToList();
 
-            var customerDto = new CustomerDTO
+            var customerDto = new CustomerDto
             {
                 CustomerID = customer.CustomerID,
                 ContactName = customer.ContactName,
@@ -46,12 +46,12 @@ namespace CustomerOrders.WebAPI.Controllers
         }
 
         [Route("api/customer/{customerId}/orders")]
-        public IEnumerable<OrderDTO> GetOrdersByCustomerId(string customerId)
+        public IEnumerable<OrderDto> GetOrdersByCustomerId(string customerId)
         {
             var orders = _repository.GetOrdersByCustomerId(customerId);
 
             var orderDtos = orders.Select(
-                o => new OrderDTO
+                o => new OrderDto
                 {
                     OrderID = o.OrderID,
                     CustomerID = o.CustomerID
