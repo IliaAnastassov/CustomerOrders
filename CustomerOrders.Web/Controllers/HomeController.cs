@@ -54,7 +54,7 @@ namespace CustomerOrders.Web.Controllers
             var customerRequestUri = GetRequestUri(string.Format(ApiEndpoints.CUSTOMER_DETAILS, id));
             var customer = await GetCustomer(customerRequestUri);
 
-            if (customer == null)
+            if (customer.CustomerID == null)
             {
                 return RedirectToAction(nameof(Index));
             }
