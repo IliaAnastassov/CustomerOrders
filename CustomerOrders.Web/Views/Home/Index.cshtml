@@ -1,11 +1,14 @@
-﻿@model IEnumerable<CustomerOrders.Web.ViewModels.HomeIndexViewModel>
+﻿@using CustomerOrders.Web.Models
+@using CustomerOrders.Web.ViewModels
+
+@model IEnumerable<Customer>
 
 @{
     ViewBag.Title = "Customer Orders";
 }
 
-<div class="jumbotron">
-    <h1>Customer Orders</h1>
+<div class="page-header">
+    <h2>Customer Orders</h2>
 </div>
 
 <div class="row">
@@ -13,7 +16,7 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                    @Html.DisplayNameFor(model => model.ContactName)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.NumberOfOrders)
@@ -24,13 +27,13 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => customer.Name)
+                        @Html.DisplayFor(modelItem => customer.ContactName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => customer.NumberOfOrders)
+                        @Html.DisplayFor(modelItem => customer.Orders.Count)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "Details", new { id = customer.Id })
+                        @Html.ActionLink("Details", "Details", new { id = customer.CustomerID })
                     </td>
                 </tr>
             }

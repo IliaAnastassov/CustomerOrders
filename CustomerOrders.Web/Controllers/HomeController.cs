@@ -28,36 +28,22 @@ namespace CustomerOrders.Web.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var customers = new List<Customer>();
-            var model = new List<HomeIndexViewModel>();
+            var model = new List<Customer>();
             var responseMessage = await _client.GetAsync(_apiUrl);
 
             if (responseMessage.IsSuccessStatusCode)
             {
                 var responseData = responseMessage.Content.ReadAsStringAsync().Result;
-                customers = JsonConvert.DeserializeObject<List<Customer>>(responseData);
-                model = customers.Select(
-                    c => new HomeIndexViewModel
-                    {
-                        Id = c.CustomerID,
-                        Name = c.ContactName,
-                        NumberOfOrders = c.Orders.Count
-                    }).ToList();
+                model = JsonConvert.DeserializeObject<List<Customer>>(responseData);
             }
 
             return View(model);
         }
 
-        public ActionResult About()
+        public ActionResult Details(string id)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+            var customer = new Customer();
+            var model = new HomeDetailsViewModel();
 
             return View();
         }
