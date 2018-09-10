@@ -15,6 +15,13 @@ namespace CustomerOrders.WebAPI.Controllers
             _repository = repository;
         }
 
+        [Route("api/customers")]
+        public IEnumerable<CustomerDto> GetCustomers()
+        {
+            var customers = _repository.GetAllCustomers();
+            return Mapper.Map<List<CustomerDto>>(customers);
+        }
+
         public CustomerDto GetCustomer(string id)
         {
             var customer = _repository.GetCustomer(id);
