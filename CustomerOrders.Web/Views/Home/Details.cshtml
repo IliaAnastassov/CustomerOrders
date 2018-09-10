@@ -1,6 +1,6 @@
 ﻿@using CustomerOrders.Web.ViewModels
 
-@model CustomerOrders.Web.ViewModels.HomeDetailsViewModel
+@model HomeDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -34,6 +34,9 @@
                 <div class="panel-body">
                     <div>Total: @string.Format("{0:C2}", order.Total)</div>
                     <div>Number of products: @order.ProductCount</div>
+                    <div class="text-danger">
+                        @order.WarningMessage
+                    </div>
                 </div>
             </section>
         }

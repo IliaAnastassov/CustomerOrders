@@ -8,6 +8,7 @@ namespace CustomerOrders.Web.Models
         public string CustomerID { get; set; }
         public decimal Total { get; set; }
         public int ProductCount { get; set; }
+        public string WarningMessage { get; set; }
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
     }

@@ -1,4 +1,5 @@
 ﻿using CustomerOrders.Web.Constants;
+using CustomerOrders.Web.Messages;
 using CustomerOrders.Web.Models;
 using CustomerOrders.Web.ViewModels;
 using System.Collections.Generic;
@@ -22,26 +23,50 @@ namespace CustomerOrders.Web.Controllers
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
-            var requestUri = GetRequestUri(ApiEndpoints.Customers);
+            var requestUri = GetRequestUri(ApiEndpoints.CUSTOMERS);
             var customers = await GetCustomers(requestUri);
+
+            return View(customers);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Index(string customerNameKeyword)
+        {
+            var requestUri = GetRequestUri(ApiEndpoints.CUSTOMERS);
+            var customers = await GetCustomers(requestUri);
+
+            if (!string.IsNullOrWhiteSpace(customerNameKeyword))
+            {
+                var filteredCustomers = customers.Where(c => c.ContactName.ToLower().Contains(customerNameKeyword.ToLower()))
+                                                 .ToList();
+                return View(filteredCustomers);
+            }
 
             return View(customers);
         }
 
         public async Task<ActionResult> Details(string id)
         {
-            var customerRequestUri = GetRequestUri(string.Format(ApiEndpoints.CustomerDetails, id));
+            var customerRequestUri = GetRequestUri(string.Format(ApiEndpoints.CUSTOMER_DETAILS, id));
             var customer = await GetCustomer(customerRequestUri);
 
-            var ordersRequestUri = GetRequestUri(string.Format(ApiEndpoints.CustomerOrders, id));
+            if (customer == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var ordersRequestUri = GetRequestUri(string.Format(ApiEndpoints.CUSTOMER_ORDERS, id));
             var orders = await GetOrders(ordersRequestUri);
 
             foreach (var order in orders)
             {
                 order.Total = GetTotalForOrder(order);
                 order.ProductCount = order.OrderDetails.Sum(o => o.Quantity);
+                order.WarningMessage = GetWarningMessage(order.OrderDetails);
             }
 
             var model = new HomeDetailsViewModel();
@@ -49,6 +74,18 @@ namespace CustomerOrders.Web.Controllers
             model.Orders = orders;
 
             return View(model);
+        }
+
+        private string GetWarningMessage(IEnumerable<OrderDetail> orderDetails)
+        {
+            string message = string.Empty;
+
+            if (orderDetails.Any(o => o.Product.Discontinued || o.Product.UnitsInStock < o.Product.UnitsOnOrder))
+            {
+                message = BusinessMessages.WARRNING;
+            }
+
+            return message;
         }
 
         private decimal GetTotalForOrder(Order order)
