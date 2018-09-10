@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace CustomerOrders.Web.Messages
+﻿namespace CustomerOrders.Web.Messages
 {
     public class BusinessMessages
     {

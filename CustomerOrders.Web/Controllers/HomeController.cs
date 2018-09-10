@@ -61,19 +61,23 @@ namespace CustomerOrders.Web.Controllers
 
             var ordersRequestUri = GetRequestUri(string.Format(ApiEndpoints.CUSTOMER_ORDERS, id));
             var orders = await GetOrders(ordersRequestUri);
-
-            foreach (var order in orders)
-            {
-                order.Total = GetTotalForOrder(order);
-                order.ProductCount = order.OrderDetails.Sum(o => o.Quantity);
-                order.WarningMessage = GetWarningMessage(order.OrderDetails);
-            }
+            SetOrderProperties(orders);
 
             var model = new HomeDetailsViewModel();
             model.Customer = customer;
             model.Orders = orders;
 
             return View(model);
+        }
+
+        private void SetOrderProperties(List<Order> orders)
+        {
+            foreach (var order in orders)
+            {
+                order.Total = GetTotal(order);
+                order.ProductCount = order.OrderDetails.Sum(o => o.Quantity);
+                order.WarningMessage = GetWarningMessage(order.OrderDetails);
+            }
         }
 
         private string GetWarningMessage(IEnumerable<OrderDetail> orderDetails)
@@ -88,7 +92,7 @@ namespace CustomerOrders.Web.Controllers
             return message;
         }
 
-        private decimal GetTotalForOrder(Order order)
+        private decimal GetTotal(Order order)
         {
             decimal total = 0;
             foreach (var orderDetail in order.OrderDetails)
