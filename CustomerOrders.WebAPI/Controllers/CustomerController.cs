@@ -1,4 +1,5 @@
-﻿using CustomerOrders.Data.Interfaces;
+﻿using AutoMapper;
+using CustomerOrders.Data.Interfaces;
 using CustomerOrders.WebAPI.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,46 +19,14 @@ namespace CustomerOrders.WebAPI.Controllers
         public CustomerDto GetCustomer(string id)
         {
             var customer = _repository.GetCustomer(id);
-
-            var orderDtos = customer.Orders.Select(
-                o => new OrderDto
-                {
-                    OrderID = o.OrderID,
-                    CustomerID = o.CustomerID
-                }).ToList();
-
-            var customerDto = new CustomerDto
-            {
-                CustomerID = customer.CustomerID,
-                ContactName = customer.ContactName,
-                CompanyName = customer.CompanyName,
-                ContactTitle = customer.ContactTitle,
-                Address = customer.Address,
-                City = customer.City,
-                Region = customer.Region,
-                PostalCode = customer.PostalCode,
-                Country = customer.Country,
-                Phone = customer.Phone,
-                Fax = customer.Fax,
-                Orders = orderDtos
-            };
-
-            return customerDto;
+            return Mapper.Map<CustomerDto>(customer);
         }
 
         [Route("api/customer/{customerId}/orders")]
         public IEnumerable<OrderDto> GetOrdersByCustomerId(string customerId)
         {
             var orders = _repository.GetOrdersByCustomerId(customerId);
-
-            var orderDtos = orders.Select(
-                o => new OrderDto
-                {
-                    OrderID = o.OrderID,
-                    CustomerID = o.CustomerID
-                }).ToList();
-
-            return orderDtos;
+            return Mapper.Map<List<OrderDto>>(orders);
         }
     }
 }

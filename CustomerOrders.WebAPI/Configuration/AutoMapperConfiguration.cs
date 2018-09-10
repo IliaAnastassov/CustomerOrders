@@ -8,10 +8,14 @@ namespace CustomerOrders.WebAPI.Configuration
     {
         public static void Configure()
         {
-            Mapper.Initialize(config => config.CreateMap<Customer, CustomerDto>());
-            Mapper.Initialize(config => config.CreateMap<Order, OrderDto>());
-            Mapper.Initialize(config => config.CreateMap<Order_Detail, OrderDetailDto>());
-            Mapper.Initialize(config => config.CreateMap<Product, ProductDto>());
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<Customer, CustomerDto>();
+                config.CreateMap<Order, OrderDto>()
+                      .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.Order_Details));
+                config.CreateMap<Order_Detail, OrderDetailDto>();
+                config.CreateMap<Product, ProductDto>();
+            });
         }
     }
 }
