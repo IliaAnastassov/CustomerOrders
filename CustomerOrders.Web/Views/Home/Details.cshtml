@@ -7,11 +7,31 @@
 }
 
 <div class="page-header">
-    <h2>Details</h2>
+    <h2>@Model.Customer.ContactName</h2>
 </div>
 
 <div class="row">
     <div class="col-md-10">
-        @Html.DisplayFor(m => Model.Message)
+        <section>
+            <div>Company: @Model.Customer.CompanyName</div>
+            <div>Title: @Model.Customer.ContactTitle</div>
+            <div>Address: @Model.Customer.Address</div>
+            <div>Region: @Model.Customer.Region</div>
+            <div>Postal Code: @Model.Customer.PostalCode</div>
+            <div>Country: @Model.Customer.Country</div>
+            <div>Phone: @Model.Customer.Phone</div>
+            <div>Fax: @Model.Customer.Fax</div>
+        </section>
+
+        <div>
+            <h4>Orders</h4>
+        </div>
+
+        @foreach (var order in Model.Orders)
+        {
+            <section>
+                <div>ID: @order.OrderID</div>
+            </section>
+        }
     </div>
 </div>

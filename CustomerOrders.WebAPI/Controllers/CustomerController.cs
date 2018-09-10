@@ -30,6 +30,15 @@ namespace CustomerOrders.WebAPI.Controllers
             {
                 CustomerID = customer.CustomerID,
                 ContactName = customer.ContactName,
+                CompanyName = customer.CompanyName,
+                ContactTitle = customer.ContactTitle,
+                Address = customer.Address,
+                City = customer.City,
+                Region = customer.Region,
+                PostalCode = customer.PostalCode,
+                Country = customer.Country,
+                Phone = customer.Phone,
+                Fax = customer.Fax,
                 Orders = orderDtos
             };
 
