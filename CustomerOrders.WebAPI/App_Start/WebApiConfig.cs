@@ -4,6 +4,7 @@ using CustomerOrders.WebAPI.Configuration;
 using CustomerOrders.WebAPI.Resolver;
 using Newtonsoft.Json;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Unity;
 using Unity.Lifetime;
 
@@ -23,6 +24,9 @@ namespace CustomerOrders.WebAPI
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
             config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
             config.Formatters.Remove(config.Formatters.XmlFormatter);
+
+            var provider = new EnableCorsAttribute("*", "*", "GET");
+            config.EnableCors(provider);
 
             // Web API routes
             config.MapHttpAttributeRoutes();
