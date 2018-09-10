@@ -11,9 +11,10 @@ namespace CustomerOrders.Data.Repositories
 
         public IEnumerable<Customer> GetAllCustomers()
         {
-            var customers = _context.Customers.AsNoTracking()
-                                              .OrderBy(c => c.ContactName)
-                                              .ToList();
+            var customers = new List<Customer>();
+            customers = _context.Customers.AsNoTracking()
+                                          .OrderBy(c => c.ContactName)
+                                          .ToList();
 
             return customers;
         }
@@ -26,10 +27,11 @@ namespace CustomerOrders.Data.Repositories
 
         public IEnumerable<Order> GetOrdersByCustomerId(string id)
         {
-            var orders = _context.Orders.AsNoTracking()
-                                        .Include(o => o.Order_Details)
-                                        .Where(o => o.CustomerID == id)
-                                        .ToList();
+            var orders = new List<Order>();
+            orders = _context.Orders.AsNoTracking()
+                                    .Include(o => o.Order_Details)
+                                    .Where(o => o.CustomerID == id)
+                                    .ToList();
 
             return orders;
         }
