@@ -1,12 +1,10 @@
-﻿using System;
+﻿using CustomerOrders.Web.Controllers;
+using CustomerOrders.Web.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CustomerOrders.Web;
-using CustomerOrders.Web.Controllers;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace CustomerOrders.Web.Tests.Controllers
 {
@@ -14,16 +12,17 @@ namespace CustomerOrders.Web.Tests.Controllers
     public class HomeControllerTest
     {
         [TestMethod]
-        public void Index()
+        public async Task Index()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            var controller = new HomeController();
 
             // Act
-            Task<ActionResult> result = controller.Index() as Task<ActionResult>;
+            ViewResult result = await controller.Index();
+            var customers = result.Model as List<Customer>;
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsTrue(customers.Any());
         }
     }
 }
