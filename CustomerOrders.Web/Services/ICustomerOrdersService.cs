@@ -6,7 +6,7 @@ namespace CustomerOrders.Web.Services
 {
     public interface ICustomerOrdersService
     {
-        Task<List<Customer>> GetCustomers(string requestUri);
+        Task<List<Customer>> GetCustomers();
         Task<Customer> GetCustomer(string requestUri);
         Task<List<Order>> GetOrders(string requestUri);
         void SetOrderProperties(List<Order> orders);

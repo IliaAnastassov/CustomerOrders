@@ -1,6 +1,8 @@
-﻿using CustomerOrders.Web.Messages;
+﻿using CustomerOrders.Web.Constants;
+using CustomerOrders.Web.Messages;
 using CustomerOrders.Web.Models;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -19,10 +21,12 @@ namespace CustomerOrders.Web.Services
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<List<Customer>> GetCustomers(string requestUri)
+        public async Task<List<Customer>> GetCustomers()
         {
             var customers = new List<Customer>();
+            var requestUri = GetRequestUri(ApiEndpoints.CUSTOMERS);
             var response = await _client.GetAsync(requestUri);
+
             if (response.IsSuccessStatusCode)
             {
                 customers = await response.Content.ReadAsAsync<List<Customer>>();
@@ -31,10 +35,13 @@ namespace CustomerOrders.Web.Services
             return customers;
         }
 
-        public async Task<Customer> GetCustomer(string requestUri)
+        public async Task<Customer> GetCustomer(string customerId)
         {
             var customer = new Customer();
+            var endpoint = string.Format(ApiEndpoints.CUSTOMER_DETAILS, customerId);
+            var requestUri = GetRequestUri(endpoint);
             var response = await _client.GetAsync(requestUri);
+
             if (response.IsSuccessStatusCode)
             {
                 customer = await response.Content.ReadAsAsync<Customer>();
@@ -43,10 +50,13 @@ namespace CustomerOrders.Web.Services
             return customer;
         }
 
-        public async Task<List<Order>> GetOrders(string requestUri)
+        public async Task<List<Order>> GetOrders(string customerId)
         {
             var orders = new List<Order>();
+            var endpoint = string.Format(ApiEndpoints.CUSTOMER_ORDERS, customerId);
+            var requestUri = GetRequestUri(endpoint);
             var response = await _client.GetAsync(requestUri);
+
             if (response.IsSuccessStatusCode)
             {
                 orders = await response.Content.ReadAsAsync<List<Order>>();
@@ -87,6 +97,11 @@ namespace CustomerOrders.Web.Services
             }
 
             return message;
+        }
+
+        private string GetRequestUri(string endpoint)
+        {
+            return $"{ConfigurationManager.AppSettings["ApiUrl"]}{endpoint}";
         }
     }
 }
