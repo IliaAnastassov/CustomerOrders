@@ -1,7 +1,9 @@
 ﻿using CustomerOrders.Web.Controllers;
 using CustomerOrders.Web.Models;
+using CustomerOrders.Web.Services;
 using CustomerOrders.Web.ViewModels;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+using Rhino.Mocks;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,40 +11,51 @@ using System.Web.Mvc;
 
 namespace CustomerOrders.Web.Tests.Controllers
 {
-    [TestClass]
+    [TestFixture]
     public class HomeControllerTest
     {
-        [TestMethod]
+        [Test]
         public async Task IndexShouldGetCustomers()
         {
-            var controller = new HomeController();
+            var mockService = MockRepository.Mock<ICustomerOrdersService>();
+            mockService.Stub(async m => await m.GetCustomers())
+                                               .Return(Task.FromResult(new List<Customer>()));
+            var controller = new HomeController(mockService);
 
             ViewResult result = await controller.Index();
-            var customers = result.Model as List<Customer>;
 
-            Assert.IsTrue(customers.Any());
+            Assert.That(result, Is.Not.Null);
         }
 
-        [TestMethod]
+        [Test]
         public async Task DetailsShouldGetCustomerDetails()
         {
-            var controller = new HomeController();
+            var mockService = MockRepository.Mock<ICustomerOrdersService>();
+            mockService.Stub(async m => await m.GetCustomer(Arg<string>.Is.Anything))
+                                               .Return(Task.FromResult(new Customer { CustomerID = "Test" }));
+            mockService.Stub(async m => await m.GetOrders(Arg<string>.Is.Anything))
+                                               .Return(Task.FromResult(new List<Order>()));
+            var controller = new HomeController(mockService);
 
-            ViewResult result = await controller.Details("ROMEY") as ViewResult;
+            ViewResult result = await controller.Details(string.Empty) as ViewResult;
             var model = result.Model as HomeDetailsViewModel;
 
-            Assert.AreEqual(5, model.Customer.NumberOfOrders);
+            Assert.That(model.Customer, Is.Not.Null);
+            Assert.That(model.Orders, Is.Not.Null);
         }
 
-        [TestMethod]
+        [Test]
         public async Task DetailsShouldRedirectToIndexWhenPassedEmpty()
         {
-            var controller = new HomeController();
+            var mockService = MockRepository.Mock<ICustomerOrdersService>();
+            mockService.Stub(async m => await m.GetCustomer(Arg<string>.Is.Anything))
+                                               .Return(Task.FromResult(new Customer()));
+            var controller = new HomeController(mockService);
 
             RedirectToRouteResult result = await controller.Details(string.Empty) as RedirectToRouteResult;
             var route = result.RouteValues.Values.First();
 
-            Assert.AreEqual("Index", route);
+            Assert.That("Index", Is.EqualTo(route));
         }
     }
 }
