@@ -15,11 +15,9 @@
 
         <div class="panel panel-default">
             <form asp-controller="Home" asp-action="Index" method="post" class="panel-body">
-                <p>
-                    <input type="text" name="CustomerNameKeyword" />
-                    <input type="submit" value="Search" class="btn" />
-                    @Html.AntiForgeryToken()
-                </p>
+                @Html.AntiForgeryToken()
+                <input type="text" name="CustomerNameKeyword" />
+                <input type="submit" value="Search" class="btn" />
             </form>
         </div>
 
