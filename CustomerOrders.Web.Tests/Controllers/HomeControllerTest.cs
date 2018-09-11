@@ -17,10 +17,10 @@ namespace CustomerOrders.Web.Tests.Controllers
         [Test]
         public async Task IndexShouldGetCustomers()
         {
-            var mockService = MockRepository.Mock<ICustomerOrdersService>();
-            mockService.Stub(async m => await m.GetCustomers())
-                                               .Return(Task.FromResult(new List<Customer>()));
-            var controller = new HomeController(mockService);
+            var customerOrdersServiceMock = MockRepository.Mock<ICustomerOrdersService>();
+            customerOrdersServiceMock.Stub(async m => await m.GetCustomers())
+                                     .Return(Task.FromResult(new List<Customer>()));
+            var controller = new HomeController(customerOrdersServiceMock);
 
             ViewResult result = await controller.Index();
 
@@ -30,12 +30,12 @@ namespace CustomerOrders.Web.Tests.Controllers
         [Test]
         public async Task DetailsShouldGetCustomerDetails()
         {
-            var mockService = MockRepository.Mock<ICustomerOrdersService>();
-            mockService.Stub(async m => await m.GetCustomer(Arg<string>.Is.Anything))
-                                               .Return(Task.FromResult(new Customer { CustomerID = "Test" }));
-            mockService.Stub(async m => await m.GetOrders(Arg<string>.Is.Anything))
-                                               .Return(Task.FromResult(new List<Order>()));
-            var controller = new HomeController(mockService);
+            var customerOrdersServiceMock = MockRepository.Mock<ICustomerOrdersService>();
+            customerOrdersServiceMock.Stub(async m => await m.GetCustomer(Arg<string>.Is.Anything))
+                                     .Return(Task.FromResult(new Customer { CustomerID = "Test" }));
+            customerOrdersServiceMock.Stub(async m => await m.GetOrders(Arg<string>.Is.Anything))
+                                     .Return(Task.FromResult(new List<Order>()));
+            var controller = new HomeController(customerOrdersServiceMock);
 
             ViewResult result = await controller.Details(string.Empty) as ViewResult;
             var model = result.Model as HomeDetailsViewModel;
@@ -47,10 +47,10 @@ namespace CustomerOrders.Web.Tests.Controllers
         [Test]
         public async Task DetailsShouldRedirectToIndexWhenPassedEmpty()
         {
-            var mockService = MockRepository.Mock<ICustomerOrdersService>();
-            mockService.Stub(async m => await m.GetCustomer(Arg<string>.Is.Anything))
-                                               .Return(Task.FromResult(new Customer()));
-            var controller = new HomeController(mockService);
+            var customerOrdersServiceMock = MockRepository.Mock<ICustomerOrdersService>();
+            customerOrdersServiceMock.Stub(async m => await m.GetCustomer(Arg<string>.Is.Anything))
+                                     .Return(Task.FromResult(new Customer()));
+            var controller = new HomeController(customerOrdersServiceMock);
 
             RedirectToRouteResult result = await controller.Details(string.Empty) as RedirectToRouteResult;
             var route = result.RouteValues.Values.First();
