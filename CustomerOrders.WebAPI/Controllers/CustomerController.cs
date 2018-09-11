@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using CustomerOrders.Data.Interfaces;
+﻿using CustomerOrders.Data.Interfaces;
 using CustomerOrders.WebAPI.Models;
+using CustomerOrders.WebAPI.Services;
 using System.Collections.Generic;
 using System.Web.Http;
 
@@ -9,18 +9,20 @@ namespace CustomerOrders.WebAPI.Controllers
     [RoutePrefix("api/customer")]
     public class CustomerController : ApiController
     {
-        private readonly IRepository _repository;
+        private IRepository _repository;
+        private IMapperService _mapperService;
 
-        public CustomerController(IRepository repository)
+        public CustomerController(IRepository repository, IMapperService mapperService)
         {
             _repository = repository;
+            _mapperService = mapperService;
         }
 
         [Route("~/api/customers")]
         public IHttpActionResult GetAll()
         {
             var customers = _repository.GetAllCustomers();
-            var customerDtos = Mapper.Map<List<CustomerDto>>(customers);
+            var customerDtos = _mapperService.Map(customers);
 
             return Ok(customerDtos);
         }
@@ -34,7 +36,7 @@ namespace CustomerOrders.WebAPI.Controllers
                 return NotFound();
             }
 
-            var customerDto = Mapper.Map<CustomerDto>(customer);
+            var customerDto = _mapperService.Map(customer);
 
             return Ok(customerDto);
         }
@@ -43,7 +45,7 @@ namespace CustomerOrders.WebAPI.Controllers
         public IHttpActionResult GetOrdersByCustomerId(string customerId)
         {
             var orders = _repository.GetOrdersByCustomerId(customerId);
-            var orderDtos = Mapper.Map<List<OrderDto>>(orders);
+            var orderDtos = _mapperService.Map(orders);
 
             return Ok(orderDtos);
         }

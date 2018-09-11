@@ -142,6 +142,8 @@
     <Compile Include="Models\ProductDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resolver\UnityResolver.cs" />
+    <Compile Include="Services\DtoMapperService.cs" />
+    <Compile Include="Services\IMapperService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

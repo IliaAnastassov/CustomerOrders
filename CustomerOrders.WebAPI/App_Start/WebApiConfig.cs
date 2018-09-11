@@ -2,6 +2,7 @@
 using CustomerOrders.Data.Repositories;
 using CustomerOrders.WebAPI.Configuration;
 using CustomerOrders.WebAPI.Resolver;
+using CustomerOrders.WebAPI.Services;
 using Newtonsoft.Json;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -17,6 +18,7 @@ namespace CustomerOrders.WebAPI
             // Web API configuration and services
             var container = new UnityContainer();
             container.RegisterType<IRepository, Repository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IMapperService, DtoMapperService>(new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
 
             AutoMapperConfiguration.Configure();
