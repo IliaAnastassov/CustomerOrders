@@ -24,7 +24,7 @@ namespace CustomerOrders.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public async Task<ViewResult> Index()
         {
             var requestUri = GetRequestUri(ApiEndpoints.CUSTOMERS);
             var customers = await GetCustomers(requestUri);
@@ -34,7 +34,7 @@ namespace CustomerOrders.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Index(string customerNameKeyword)
+        public async Task<ViewResult> Index(string customerNameKeyword)
         {
             var requestUri = GetRequestUri(ApiEndpoints.CUSTOMERS);
             var customers = await GetCustomers(requestUri);
