@@ -42,7 +42,7 @@ namespace CustomerOrders.Web.Controllers
         {
             var customer = await _service.GetCustomer(id);
 
-            if (customer.CustomerID == null)
+            if (string.IsNullOrEmpty(customer.CustomerID))
             {
                 return RedirectToAction(nameof(Index));
             }
