@@ -1,7 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using CustomerOrders.Data;
 using CustomerOrders.WebAPI.Models;
-using System.Collections.Generic;
 
 namespace CustomerOrders.WebAPI.Services
 {

@@ -1,6 +1,5 @@
-using CustomerOrders.Web.Services;
 using System;
-
+using CustomerOrders.Web.Services;
 using Unity;
 
 namespace CustomerOrders.Web

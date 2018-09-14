@@ -1,11 +1,11 @@
-﻿using CustomerOrders.Data;
+﻿using System.Collections.Generic;
+using CustomerOrders.Data;
 using CustomerOrders.Data.Interfaces;
 using CustomerOrders.WebAPI.Controllers;
 using CustomerOrders.WebAPI.Models;
 using CustomerOrders.WebAPI.Services;
 using NUnit.Framework;
 using Rhino.Mocks;
-using System.Collections.Generic;
 
 namespace CustomerOrders.WebAPI.Tests.Controllers
 {

@@ -1,6 +1,6 @@
-﻿using CustomerOrders.Web.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CustomerOrders.Web.Models;
 
 namespace CustomerOrders.Web.Services
 {

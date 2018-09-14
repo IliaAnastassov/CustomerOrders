@@ -1,7 +1,7 @@
-﻿using CustomerOrders.Data.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using CustomerOrders.Data.Interfaces;
 
 namespace CustomerOrders.Data.Repositories
 {

@@ -1,13 +1,13 @@
-﻿using CustomerOrders.Web.Controllers;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using CustomerOrders.Web.Controllers;
 using CustomerOrders.Web.Models;
 using CustomerOrders.Web.Services;
 using CustomerOrders.Web.ViewModels;
 using NUnit.Framework;
 using Rhino.Mocks;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 
 namespace CustomerOrders.Web.Tests.Controllers
 {

@@ -1,11 +1,11 @@
-﻿using CustomerOrders.Data.Interfaces;
+﻿using System.Web.Http;
+using System.Web.Http.Cors;
+using CustomerOrders.Data.Interfaces;
 using CustomerOrders.Data.Repositories;
 using CustomerOrders.WebAPI.Configuration;
 using CustomerOrders.WebAPI.Resolver;
 using CustomerOrders.WebAPI.Services;
 using Newtonsoft.Json;
-using System.Web.Http;
-using System.Web.Http.Cors;
 using Unity;
 using Unity.Lifetime;
 

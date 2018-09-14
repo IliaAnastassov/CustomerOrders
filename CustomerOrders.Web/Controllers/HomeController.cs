@@ -1,8 +1,8 @@
-﻿using CustomerOrders.Web.Services;
-using CustomerOrders.Web.ViewModels;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using CustomerOrders.Web.Services;
+using CustomerOrders.Web.ViewModels;
 
 namespace CustomerOrders.Web.Controllers
 {

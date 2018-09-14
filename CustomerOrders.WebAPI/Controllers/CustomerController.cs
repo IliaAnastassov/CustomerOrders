@@ -1,8 +1,6 @@
-﻿using CustomerOrders.Data.Interfaces;
-using CustomerOrders.WebAPI.Models;
+﻿using System.Web.Http;
+using CustomerOrders.Data.Interfaces;
 using CustomerOrders.WebAPI.Services;
-using System.Collections.Generic;
-using System.Web.Http;
 
 namespace CustomerOrders.WebAPI.Controllers
 {
