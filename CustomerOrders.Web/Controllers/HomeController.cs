@@ -16,7 +16,7 @@ namespace CustomerOrders.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ViewResult> Index()
+        public async Task<ActionResult> Index()
         {
             var customers = await _service.GetCustomers();
             return View(customers);
@@ -24,7 +24,7 @@ namespace CustomerOrders.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ViewResult> Index(string customerNameKeyword)
+        public async Task<ActionResult> Index(string customerNameKeyword)
         {
             var customers = await _service.GetCustomers();
 

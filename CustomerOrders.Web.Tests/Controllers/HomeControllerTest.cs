@@ -22,7 +22,7 @@ namespace CustomerOrders.Web.Tests.Controllers
                                      .Return(Task.FromResult(new List<Customer>()));
             var controller = new HomeController(customerOrdersServiceMock);
 
-            ViewResult result = await controller.Index();
+            var result = await controller.Index() as ViewResult;
 
             Assert.That(result, Is.Not.Null);
         }
@@ -37,7 +37,7 @@ namespace CustomerOrders.Web.Tests.Controllers
                                      .Return(Task.FromResult(new List<Order>()));
             var controller = new HomeController(customerOrdersServiceMock);
 
-            ViewResult result = await controller.Details(string.Empty) as ViewResult;
+            var result = await controller.Details(string.Empty) as ViewResult;
             var model = result.Model as HomeDetailsViewModel;
 
             Assert.That(model.Customer, Is.Not.Null);
@@ -52,7 +52,7 @@ namespace CustomerOrders.Web.Tests.Controllers
                                      .Return(Task.FromResult(new Customer()));
             var controller = new HomeController(customerOrdersServiceMock);
 
-            RedirectToRouteResult result = await controller.Details(string.Empty) as RedirectToRouteResult;
+            var result = await controller.Details(string.Empty) as RedirectToRouteResult;
             var route = result.RouteValues.Values.First();
 
             Assert.That("Index", Is.EqualTo(route));
